@@ -22,7 +22,7 @@ CREATE TABLE showtimes (
     movie_id INT NOT NULL,
     room_id INT NOT NULL,
     show_time DATETIME NOT NULL,
-    ticket_price DECIMAL(10,2) CHECK (ticket_price >= 0) NOT NULL,
+    ticket_price DECIMAL(10,2) NOT NULL CHECK (ticket_price >= 0),
     FOREIGN KEY (movie_id) REFERENCES movies(id),
     FOREIGN KEY (room_id) REFERENCES rooms(id)
 );
@@ -35,3 +35,37 @@ CREATE TABLE bookings (
     booking_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (showtime_id) REFERENCES showtimes(id)
 );
+
+INSERT INTO movies (title, duration_minutes, age_restriction) 
+VALUES
+('Avengers: Secret Wars', 150, 13),
+('Dune: Part Two', 165, 13),
+('Deadpool 3', 130, 18),
+('Kung Fu Panda 4', 100, 0);
+
+INSERT INTO rooms (name, max_seats, status) 
+VALUES
+('Room 1', 100, 'active'),
+('Room 2', 80, 'active'),
+('Room 3', 120, 'maintenance'); 
+
+INSERT INTO showtimes (movie_id, room_id, show_time, ticket_price)
+VALUES
+(1, 1, '2026-05-02 10:00:00', 90000),
+(2, 1, '2026-05-02 14:00:00', 100000),
+(3, 2, '2026-05-02 18:00:00', 120000),
+(4, 2, '2026-05-03 09:00:00', 80000),
+(1, 1, '2026-05-03 20:00:00', 110000);
+
+INSERT INTO bookings (showtime_id, customer_name, phone) 
+VALUES
+(1, 'Nguyen Van A', '0912345678'),
+(1, 'Tran Thi B', '0987654321'),
+(2, 'Le Van C', '0901122334'),
+(2, 'Pham Thi D', '0911223344'),
+(3, 'Hoang Van E', '0933445566'),
+(3, 'Nguyen Thi F', '0944556677'),
+(4, 'Tran Van G', '0955667788'),
+(5, 'Le Thi H', '0966778899'),
+(5, 'Pham Van I', '0977889900'),
+(5, 'Hoang Thi K', '0988990011');
